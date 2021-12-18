@@ -34,10 +34,10 @@ class MultiCamera:
         # capture from Camera
         self.imgs = []
         for conf in self.config :
-            time.sleep(0.05)
-            GPIO.output(self.selectPin, conf['select'])
-            if self.cap.isOpened(): 
+            if self.cap.isOpened():
+                ___, ___ = self.cap.read() # just for warming up 
                 ret, img = self.cap.read()
+                GPIO.output(self.selectPin, conf['select'])
                 if not ret : 
                     raise Exception("failed to get image from %s" % conf['name'])
                 self.imgs.append(img)
